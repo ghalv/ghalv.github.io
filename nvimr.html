@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Gunnar Halvorsen</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel='stylesheet' type='text/css' href='style.css'>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel='alternate' type='application/rss+xml' title='Gunnar Halvorsen RSS' href='/rss.xml'>
+</head>
+
+<body>
+    <header>
+	<h1>Nvim-R</h1>
+    </header>
+
+    <nav><ul>
+<a href="index.html"><li>🏡 Hjem</li></a>
+<a href="linux.html"><li>🐧 GNU/Linux</li></a>
+<a href="nvimr.html"><li><img src="pix/vim.png" alt="Vim logo"> EDB</li></a>
+<a href="bibliotek.html"><li>📚 Ymse</li></a>
+<a href="https://gitlab.com/ghalv"><li><img src="pix/git.svg" alt="Github logo"> GitLab</li></a>
+    </ul></nav>
+
+	<main>
+<h2>Jukseark for utvidelsen <a href="https://github.com/jalvesaq/Nvim-R">Nvim-R</a></h2>
+<hr />
+<a href="nvimr.html">nvim-R</a>
+|
+<a href="runit.html">runit</a>
+|
+<a href="modelf.html">model F</a>
+|
+<a href="pacman.html">pacman</a>
+|
+<a href="osprober.html">osprober</a>
+|
+<a href="spotify.html">spotify</a>
+|
+<a href="dvd.html">DVD</a>
+|
+<a href="keys.html">keys</a>
+|
+<a href="epost.html">e-post</a>
+<hr />
+<a href="#hotkeys">Snarveier</a>
+|
+<a href="#vimrc">vimrc</a>
+|
+<a href="#utvidelser">utvidelser</a>
+|
+<a href="#rmarkdown">R markdown</a>
+|
+<a href="#split">flytte splitt</a>
+<hr />
+
+Guide: <a href="https://kadekillary.work/post/nvim-r/">How to turn vim into an R IDE</a>
+<img src="pix/dist.webp" width=850>
+	<pre>
+,l - run (section)
+,e - echo-run section
+_ - "left arrow"
+
+\rf - start
+\rq - leave
+\rv - view data frame
+\ro - object browser
+\rl - object echo
+\rr - clear console
+\o - output in file
+
+\vh - head()
+\rs - summary()
+\rg - plot()
+\ra - args()
+\rd - setwd()
+\rp - print()
+\rn - names()
+
+\rh - help
+\re - example
+</pre>
+
+
+<h2 id="vimrc">Tastatursnarveier til vimrc</h2>
+<pre>~/.config/nvim/init.vim
+<hr />
+" remapping the basic :: send line
+	nmap  &lt;leader&gt;l  &lt;Plug&gt;RDSendLine
+" remapping selection :: send multiple lines
+	vmap  &lt;leader&gt;l  &lt;Plug&gt;RDSendSelection
+" remapping selection :: send multiple lines + echo lines
+	vmap  &lt;leader&gt;e  &lt;Plug&gt;RESendSelection
+<br />
+" KUN hvis dash - remap search key
+	nmap &lt;silent&gt; &lt;leader&gt;d &lt;Plug&gt;DashSearch&lt;CR&gt;
+</pre>
+
+<h2 id="utvidelser">Kompletterende utvidelser</h2>
+<pre><ul>
+<li><a href="https://github.com/chrisbra/csv.vim">CSV</a> H&#229;ndterer kolonneseparert data (CSV)</li>
+<li><a href="https://github.com/ncm2/ncm2">Ncm2</a> Fortl&#248;pende utbokstavering
+<a href="https://github.com/gaalcaras/ncm-R">Ncm-R</a> r-integrasjon</li>
+<li><a href="https://github.com/w0rp/ale">Ale</a> Lint-tjener for debugging
+<a href="https://github.com/jimhester/lintr">Lintr</a> r-integrasjon</li>
+<li><a href="https://github.com/rizzatti/dash.vim">Dash</a> Hurtigoppslag av kommandoer</li>
+<li><a href="https://github.com/sirver/UltiSnips">UltiSnips</a> Snippet-support for forh&#229;ndsdefinerte tekstblokker</li>
+<li><a href="https://github.com/REditorSupport/languageserver">Languageserver</a><a href="https://github.com/Microsoft/language-server-protocol"> alt</a></li>
+</ul></pre>
+
+<h2 id="rmarkdown">Installere R markdown fra CRAN</h2>
+P&#229; arch-baserte distribusjoner er <a href="https://archlinux.org/packages/extra/x86_64/tcl/">tcl</a> og <a href="https://archlinux.org/packages/extra/x86_64/tk/">tk</a> separate pakker
+<pre>
+sudo pacman -S tcl tk
+</pre>
+
+Installer rmarkdown som root
+<pre># R
+<hr />
+install.packages("rmarkdown", dep = TRUE)
+</pre>
+
+<h2 id="split">Flytte splitt</h2>
+<pre>C-w +/-</pre>
+
+
+	</main>
+<footer><a href="https://ghalv.no">https://ghalv.no</a></footer>
+</body>
+</html>

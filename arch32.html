@@ -1,0 +1,208 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Gunnar Halvorsen</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel='stylesheet' type='text/css' href='style.css'>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel='alternate' type='application/rss+xml' title='Gunnar Halvorsen RSS' href='/rss.xml'>
+</head>
+
+<body>
+    <header>
+	<h1>Installasjonsguide for GNU/Linux</h1>
+    </header>
+
+    <nav><ul>
+<a href="index.html"><li>🏡 Hjem</li></a>
+<a href="linux.html"><li>🐧 GNU/Linux</li></a>
+<a href="nvimr.html"><li><img src="pix/vim.png" alt="Vim logo"> EDB</li></a>
+<a href="bibliotek.html"><li>📚 Ymse</li></a>
+<a href="https://gitlab.com/ghalv"><li><img src="pix/git.svg" alt="Github logo"> GitLab</li></a>
+    </ul></nav>
+
+	<main>
+<h2>32-biters Arch Linux, BIOS</h2>
+<hr />
+<a href="linux.html">Artix Linux</a>
+|
+<a href="arch.html">Arch Linux</a>
+|
+<a href="arch32.html">Arch Linux 32</a>
+<hr />
+<a href="#forbered">1 - forbered</a>
+|
+<a href="#installer">2 - installer</a>
+|
+<a href="#konfigurer">3 - konfigurer</a>
+|
+<a href="#personlig">4 - personliggj&#248;r</a>
+<hr />
+
+ISO: <a href="https://archlinux32.agoctrl.org/archisos/archlinux32-2021.11.01-i686.iso">Arch Linux 32 11.01 i686</a>
+<pre># dd bs=4M if=sti/til/arch.iso of=/dev/sdx status=progress oflag=sync
+</pre>
+
+
+<h2 id="forbered">1. FORBERED SYSTEMET</h2>
+1.1. Bytt til norsk tastaturoppsett
+<pre># loadkeys no-latin1
+</pre>
+
+1.2. Koble til internett - ping gjerne en url
+<pre># wifi-menu
+# ping -c 4 www.nrk.no
+</pre>
+
+1.3. Oppdater systemklokke
+<pre># timedatectl set-ntp true
+</pre>
+
+1.4. List opp lagringsenheter og identifiser måldisk
+<pre># lsblk
+</pre>
+
+1.5. Partisjonér måldisk til hhv. "boot", "swap" og "root"
+<div class="codebox">
+       	<code>
+		/boot +200M<br />
+		/swap +1.5xRAM<br />
+		/root +resterende<br />
+	</code>
+</div>
+
+<pre># fdisk /dev/sda
+</pre>
+
+1.6. Formatér og montér swap
+<pre># mkswap /dev/sda2
+# swapon /dev/sda2
+</pre>
+
+1.7. Formatér partisjonene
+<pre># mkfs.ext4 /dev/sda1
+# mkfs.ext4 /dev/sda3
+</pre>
+
+1.8. Montér filsystem
+<pre># mount /dev/sda3 /mnt
+</pre>
+
+1.9. Opprett og montér systemmapper
+<pre># mkdir /mnt/boot
+# mount /dev/sda1 /mnt/boot
+</pre>
+
+1.10. Kontrollér
+<pre># lsblk
+</pre>
+
+<h2 id="installer">2. INSTALLÉR SYSTEMET</h2>
+2.1. Installér Arch Linux 32 og essensielle pakker I
+<pre># pacstrap /mnt base base-devel linux linux-firmware vim
+</pre>
+
+2.2. Angi hvilke partisjoner som skal monteres ved oppstart
+<pre># genfstab -U /mnt >> /mnt/etc/fstab
+</pre>
+
+3.1.1. G&#229; inn i ny installasjon
+<pre># arch-chroot /mnt
+</pre>
+
+<h2 id="konfigurer">3. KONFIGURÉR SYSTEMET</h2>
+<h3>3.1 LOKALE INSTILLINGER</h3><br />
+3.1.1. Angi tidssone og sett <i>adjtime</i>
+<pre># ln -sf /usr/share/zoneinfo/Europe/Oslo /etc/localtime
+# hwclock --systohc
+</pre>
+
+3.1.2. Angi korrekt visning av klokkeslett, dato og valuta
+<pre>/etc/locale.gen
+<hr />
+en_DK.UTF-8 UTF-8
+en_DK ISO-8859-1
+</pre>
+
+<pre># locale-gen
+</pre>
+
+3.1.3. Angi spr&#229;k
+<pre>/etc/locale.conf
+<hr />
+LANG=en_DK.UTF-8
+</pre>
+<br />
+
+3.1.4. Angi tastaturoppsett
+<pre>/etc/vconsole.conf
+<hr />
+KEYMAP=no-latin1
+</pre>
+<br />
+
+3.1.5. Angi systemnavn
+<pre># vim /etc/hostname
+</pre>
+
+<h3>3.2 GENERELLE INSTILLINGER</h3><br />
+3.2.1. Installér essensielle pakker II
+<pre># pacman -S networkmanager network-manager-applet xorg-server xorg-xinit grub dmenu ttf-inconsolata noto-fonts git dialog iw wpa_supplicant wpa_actiond mesa xf86-video-intel
+</pre>
+
+3.2.2. Aktiver nettverksdemon
+<pre># systemctl enable NetworkManager
+</pre>
+
+3.2.3. Installér og konfigurér grub
+<pre># grub-install --target=i386-pc /dev/sda
+# grub-mkconfig -o /boot/grub/grub.cfg
+</pre>
+
+3.2.4. Sett rot-passord
+<pre># passwd
+</pre>
+<!--
+3.2.5. G&#229; ut av ny installasjon
+<pre># exit
+</pre>
+
+3.2.6. Avmontér partisjoner
+<pre># umount -R /mnt
+</pre>
+
+3.2.7. Omstart
+<pre># reboot
+</pre>
+-->
+<h2 id="personlig">4. PERSONLIGGJØR SYSTEMET</h2>
+4.1.A. Kj&#248;r skript for installasjon av <a href="progs.csv">programmer</a> og personlige instillinger.
+<pre># curl -LO ghalv.no/linux.sh
+# bash linux.sh <!-- larbs.sh -r https://gitlab.com/ghalvorsen/dotfiles -p ghalv.no/progs.csv -->
+</pre>
+
+4.1B. Opprett personlig bruker
+<pre># useradd -m -G wheel gunnar
+# passwd gunnar
+</pre>
+
+4.2B. Gi rot-tilgang
+<pre># vim /etc/sudoers
+</pre>
+
+4.3B. Last ned window manager
+<pre># git clone https://gitlab.com/ghalvorsen/dwm
+# cd dwm
+# make clean install
+</pre>
+
+4.4B. Konfigurer WM
+<pre>~/.xinitrc
+<hr />
+exec dwm
+</pre>
+</main>
+<footer><a href="https://ghalv.no">https://ghalv.no</a></footer>
+</body>
+</html>
