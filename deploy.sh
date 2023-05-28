@@ -31,7 +31,7 @@ echo "Set password for user spam"
 passwd spam
 download_bashrc
 ufw allow 443
-apt install nginx python3-certbot-nginx rsync git
+apt install nginx rsync git
 cd /etc/nginx/sites-available
 curl -LO https://ghalv.github.io/ghalv
 ln -s /etc/nginx/sites-available/ghalv /etc/nginx/sites-enabled/ghalv
