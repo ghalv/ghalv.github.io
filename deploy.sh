@@ -10,7 +10,7 @@ download_bashrc() {
         # Prompt the user before overwriting
         read -p "~/.bashrc already exists. Overwrite it? [y/N] " yn
         case $yn in
-            [Yy]* ) curl -Lo .bashrc https://ghalv.github.io/bashrc && source ~/.bashrc;;
+            [Yy]* ) curl -Lo .bashrc https://ghalv.github.io/bashrc && source /root/.bashrc;;
             * ) echo "Skipped downloading of .bashrc";;
         esac
     else
