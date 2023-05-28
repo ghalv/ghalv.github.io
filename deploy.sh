@@ -47,5 +47,8 @@ echo "Add the certbot renew command to the cron jobs list"		# Not working!
 echo "Set shell to bash"
 chsh -s /bin/bash $USER
 
-echo "Script has finished successfully! Now 1) source .bashrc, 2) disable pw login and 3) hide nginx version."
+echo "Print open ports"
 sudo ufw status verbose >> firewall
+
+echo "Script has finished successfully! Now 1) source .bashrc, 2) disable pw login and 3) hide nginx version."
+echo "By default, Nginx and most other webservers automatically show their version number on error pages. It's a good idea to disable this from happening because if an exploit comes out for your server software, someone could exploit it. Open the main Nginx config file /etc/nginx/nginx.conf and find the line # server_tokens off;. Uncomment it, and reload Nginx."
