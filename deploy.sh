@@ -36,8 +36,15 @@ service nginx reload
 echo "Setting up website..."
 mkdir /var/www/ghalv
 git clone https://github.com/ghalv/ghalv.github.io /var/www/ghalv
+rm -rf /var/www/ghalv/.git
 
 echo "Running certbot..."
 certbot --nginx
 
-echo "Script has finished successfully! Now 1) source .bashrc, 2) add a cronjob for certbot, 3) disable pw login and 4) hide nginx version, and 5) set shell."
+echo "Add the certbot renew command to the cron jobs list"
+(crontab -l 2>/dev/null; echo "0 0 1 * * certbot renew") | crontab -
+
+echo "Set shell to bash"
+chsh -s /bin/bash $USER
+
+echo "Script has finished successfully! Now 1) source .bashrc, 2) disable pw login and 3) hide nginx version."
