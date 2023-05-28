@@ -41,10 +41,11 @@ rm -rf /var/www/ghalv/.git
 echo "Running certbot..."
 certbot --nginx
 
-echo "Add the certbot renew command to the cron jobs list"
+echo "Add the certbot renew command to the cron jobs list"		# Not working!
 (crontab -l 2>/dev/null; echo "0 0 1 * * certbot renew") | crontab -
 
 echo "Set shell to bash"
 chsh -s /bin/bash $USER
 
 echo "Script has finished successfully! Now 1) source .bashrc, 2) disable pw login and 3) hide nginx version."
+sudo ufw status verbose >> firewall
