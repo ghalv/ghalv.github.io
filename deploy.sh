@@ -40,4 +40,4 @@ git clone https://github.com/ghalv/ghalv.github.io /var/www/ghalv
 echo "Running certbot..."
 certbot --nginx
 
-echo "Script has finished successfully! Now 1) add a cronjob for certbot, 2) disable pw login and 3) hide nginx version."
+echo "Script has finished successfully! Now 1) source .bashrc, 2) add a cronjob for certbot, 3) disable pw login and 4) hide nginx version."
