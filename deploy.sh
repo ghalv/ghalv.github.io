@@ -28,7 +28,7 @@ echo "Installing necessary packages..."
 apt install nginx rsync git
 
 echo "Setting up nginx configuration..."
-rm /etc/nginx/sites-enabled/default
+rm -f /etc/nginx/sites-enabled/default
 (cd /etc/nginx/sites-available && curl -LO https://ghalv.github.io/ghalv)
 ln -s /etc/nginx/sites-available/ghalv /etc/nginx/sites-enabled/ghalv
 service nginx reload
