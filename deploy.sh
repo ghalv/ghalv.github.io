@@ -25,7 +25,7 @@ echo "Allowing UFW 443..."
 ufw allow 443
 
 echo "Installing necessary packages..."
-apt install nginx rsync git
+apt-get install -y nginx rsync git
 
 echo "Setting up nginx configuration..."
 rm -f /etc/nginx/sites-enabled/default
@@ -40,4 +40,4 @@ git clone https://github.com/ghalv/ghalv.github.io /var/www/ghalv
 echo "Running certbot..."
 certbot --nginx
 
-echo "Script has finished successfully! Now 1) source .bashrc, 2) add a cronjob for certbot, 3) disable pw login and 4) hide nginx version."
+echo "Script has finished successfully! Now 1) source .bashrc, 2) add a cronjob for certbot, 3) disable pw login and 4) hide nginx version, and 5) set shell."
