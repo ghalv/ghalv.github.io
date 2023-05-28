@@ -1,41 +1,43 @@
-#!/bin/sh
+#!/bin/bash
 
-# Exit on error
+# Exit on error and print each command that is executed
 set -e
+set -x
 
-# Define the command for downloading .bashrc
-download_bashrc() {
-    # Check if .bashrc already exists
-    if [ -f ~/.bashrc ]; then
-        # Prompt the user before overwriting
-        read -p "~/.bashrc already exists. Overwrite it? [y/N] " yn
-        case $yn in
-            [Yy]* ) curl -Lo .bashrc https://ghalv.github.io/bashrc && . /root/.bashrc;;
-            * ) echo "Skipped downloading of .bashrc";;
-        esac
-    else
-        # If not, just download and source it
-        curl -LO https://ghalv.github.io/.bashrc
-        source ~/.bashrc
-    fi
-}
-
-# Run the commands
+echo "Running email wizard..."
 curl -LO larbs.xyz/emailwiz.sh
 bash emailwiz.sh
+
+echo "Adding mail users..."
 useradd -m -G mail gunnar
 useradd -m -G mail spam
+
+echo "Setting passwords..."
 echo "Set password for user gunnar"
 passwd gunnar
 echo "Set password for user spam"
 passwd spam
-download_bashrc
+
+echo "Getting .bashrc file..."
+curl -Lo .bashrc https://ghalv.github.io/bashrc #; source ~/.bashrc
+
+echo "Allowing UFW 443..."
 ufw allow 443
+
+echo "Installing necessary packages..."
 apt install nginx rsync git
-cd /etc/nginx/sites-available
-curl -LO https://ghalv.github.io/ghalv
+
+echo "Setting up nginx configuration..."
+rm /etc/nginx/sites-enabled/default
+(cd /etc/nginx/sites-available && curl -LO https://ghalv.github.io/ghalv)
 ln -s /etc/nginx/sites-available/ghalv /etc/nginx/sites-enabled/ghalv
 service nginx reload
+
+echo "Setting up website..."
 mkdir /var/www/ghalv
-git clone git@github.com:ghalv/ghalv.github.io /var/www/ghalv
+git clone https://github.com/ghalv/ghalv.github.io /var/www/ghalv
+
+echo "Running certbot..."
 certbot --nginx
+
+echo "Script has finished successfully! Now 1) add a cronjob for certbot, 2) disable pw login and 3) hide nginx version."
