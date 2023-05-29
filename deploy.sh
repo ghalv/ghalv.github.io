@@ -34,7 +34,6 @@ ln -s /etc/nginx/sites-available/ghalv /etc/nginx/sites-enabled/ghalv
 systemctl reload nginx
 
 echo "Setting up website..."
-mkdir /var/www/ghalv
 git clone https://github.com/ghalv/ghalv.github.io /var/www/ghalv
 rm -rf /var/www/ghalv/.git
 
@@ -42,7 +41,7 @@ echo "Running certbot..."
 certbot --nginx
 
 echo "Add the certbot renew command to the cron jobs list"		# Not working!
-(crontab -l 2>/dev/null; echo "0 0 1 * * certbot renew") | crontab -
+(crontab -l 2>/dev/null || echo "") | { cat; echo "0 0 1 * * certbot renew"; } | crontab -
 
 echo "Set shell to bash"
 chsh -s /bin/bash $USER
