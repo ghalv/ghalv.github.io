@@ -29,7 +29,7 @@ apt-get install -y nginx rsync git
 
 echo "Setting up nginx configuration..."
 rm -f /etc/nginx/sites-enabled/default
-(cd /etc/nginx/sites-available && curl -LO https://ghalv.github.io/ghalv)
+curl -Lo /etc/nginx/sites-available/ghalv https://cerexas.github.io/ghalv
 ln -s /etc/nginx/sites-available/ghalv /etc/nginx/sites-enabled/ghalv
 systemctl reload nginx
 
