@@ -31,7 +31,7 @@ echo "Setting up nginx configuration..."
 rm -f /etc/nginx/sites-enabled/default
 (cd /etc/nginx/sites-available && curl -LO https://ghalv.github.io/ghalv)
 ln -s /etc/nginx/sites-available/ghalv /etc/nginx/sites-enabled/ghalv
-service nginx reload
+systemctl nginx reload
 
 echo "Setting up website..."
 mkdir /var/www/ghalv
