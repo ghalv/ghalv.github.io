@@ -25,11 +25,11 @@ echo "Getting .bashrc file..."
 curl -Lo .bashrc https://ghalv.github.io/bashrc #; source ~/.bashrc
 
 echo "Installing necessary packages..."
-apt-get install -y nginx rsync git
+apt-get install -y python3-certbot-nginx nginx rsync git
 
 echo "Setting up nginx configuration..."
 rm -f /etc/nginx/sites-enabled/default
-curl -Lo /etc/nginx/sites-available/ghalv https://cerexas.github.io/ghalv
+curl -Lo /etc/nginx/sites-available/ghalv https://ghalv.github.io/ghalv
 ln -s /etc/nginx/sites-available/ghalv /etc/nginx/sites-enabled/ghalv
 systemctl reload nginx
 
