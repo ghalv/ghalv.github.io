@@ -18,5 +18,6 @@ alias cp='cp -i'
 alias mv='mv -i'
 alias s='systemctl'
 alias j='journalctl -xe'
+alias pu='sudo apt update && sudo apt upgrade'
 
 [[ -f /opt/vultr/vultr_app.sh ]] && . /opt/vultr/vultr_app.sh
