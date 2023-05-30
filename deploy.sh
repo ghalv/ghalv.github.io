@@ -40,7 +40,7 @@ rm -rf /var/www/ghalv/.git
 echo "Running certbot..."
 certbot --nginx
 
-echo "Add the certbot renew command to the cron jobs list"		# Not working!
+echo "Add the certbot renew command to the cron jobs list"
 (crontab -l 2>/dev/null; echo "0 0 1 * * certbot renew") | crontab -
 
 echo "Set shell to bash"
